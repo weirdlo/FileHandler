@@ -106,4 +106,22 @@ public class FileStorage {
 			e.printStackTrace();
 		}//end of catch
 	}//end of deleteFile
+	
+	public void listFiles() {
+		String currentDir = System.getProperty("user.dir");
+		File dir = new File(currentDir);
+		File[] files = dir.listFiles();
+		
+		System.out.println(currentDir);
+		if(files != null) {
+			for(File file : files) {
+				if(file.isFile()) {
+					String isRead = (file.canRead()) ? "r" : "-r";
+					String isWrite = (file.canWrite()) ? "w" : "-w";
+					String isExecutable = (file.canExecute()) ? "x" : "-x";
+					System.out.println(">> "+file.getName()+"  "+file.length()+"B  "+isRead+isWrite+isExecutable);
+				}
+			}
+		}
+	}//end of listFiles
 }//end of class
