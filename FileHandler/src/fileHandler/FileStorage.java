@@ -1,10 +1,8 @@
 package fileHandler;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
+import java.nio.file.*;
 
 public class FileStorage {
 	public void createFile(String name) {
@@ -18,11 +16,11 @@ public class FileStorage {
 			else {
 				System.out.println("The file already exists.");
 			}
-		}
+		}//end of try
 		catch(IOException e) {
 			System.out.println("An error occured when trying to create the file.");
 			e.printStackTrace();
-		}
+		}//end of catch
 	}//end of createFile
 	
 	public void editFile(String name) {
@@ -71,13 +69,41 @@ public class FileStorage {
 					String lines = reader.nextLine();
 					System.out.println(lines);
 				}
+				reader.close();
 			}
 			else {
 				System.out.println("The file you've entered does not exist.");
 			}
-		}
+		}//end of try
 		catch(IOException e) {
 			System.out.println("An error occured while trying to read the file.");
-		}
+			e.printStackTrace();
+		}//end of catch
 	}//end of readFile
+	
+	public void deleteFile(String name) {
+		try {
+			String filename = name;
+			File file = new File(filename);
+			
+			String filepath = file.getCanonicalPath();
+			String checking = filepath.substring(filepath.lastIndexOf(File.separator) + 1);
+			
+			if(file.exists() && checking.equals(file.getName())) {
+				if(file.delete()) {
+					System.out.println(file.getName()+" was successfully deleted.");
+				}
+				else {
+					System.out.println("Cannot delete file "+file.getName());
+				}
+			}
+			else {
+				System.out.println("File: "+file.getName()+" does not exist.");
+			}
+		}//end of try
+		catch(IOException e) {
+			System.out.println("An error occured while trying to delete the file.");
+			e.printStackTrace();
+		}//end of catch
+	}//end of deleteFile
 }//end of class
