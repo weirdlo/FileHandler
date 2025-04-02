@@ -2,7 +2,8 @@ package fileHandler;
 
 import java.io.*;
 import java.util.*;
-import java.nio.file.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public class FileStorage {
 	public void createFile(String name) {
@@ -23,35 +24,36 @@ public class FileStorage {
 		}//end of catch
 	}//end of createFile
 	
-	public void editFile(String name) {
-		try {
-			String filename = name;
-			File file = new File(filename);
-			
-			//To make the filename checks case sensitive.
-			String canonicalPath = file.getCanonicalPath();
-			String checkName =  canonicalPath.substring(canonicalPath.lastIndexOf(File.separator) + 1);
-			
-			if(file.exists() && checkName.equals(file.getName())) {
-				String text;
-				FileWriter scribe = new FileWriter(file);
-				
+	public void editFile(String name) throws IOException {		
+		String filename = name;
+		File file = new File(filename);
+		String text;
+		
+		//Adding time tracker
+		LocalDateTime clock = LocalDateTime.now();
+		DateTimeFormatter clockFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String time = clock.format(clockFormat);
+		
+		//To make the filename checks case sensitive.
+		String canonicalPath = file.getCanonicalPath();
+		String checkName =  canonicalPath.substring(canonicalPath.lastIndexOf(File.separator) + 1);
+		
+		if(file.exists() && checkName.equals(file.getName())) {
+			try	(BufferedWriter scribe = new BufferedWriter(new FileWriter(filename, true))) {
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Edit file here: ");
 				text = sc.nextLine();
-				
-				scribe.write(text);
-				scribe.close();
-				System.out.println("The file "+file.getName()+" has been updated.");
-			}
-			else {
-				System.out.println("The file does not exist.");
-			}
-		}//end of try
-		catch(IOException e) {
-			System.out.println("An error occured when trying to write to the file.");
-			e.printStackTrace();
-		}//end of catch
+				scribe.write("\n"+time+"\n"+text+"\n");
+				sc.close();
+				System.out.println("\nThe file "+file.getName()+" has been updated.");
+			}//end try
+			catch(IOException e) {
+				System.out.println("File editing error occured.");
+			}//end catch				
+		}
+		else {
+			System.out.println("The file does not exist.");
+		}		
 	}//end of editFile
 	
 	public void readFile(String name){
