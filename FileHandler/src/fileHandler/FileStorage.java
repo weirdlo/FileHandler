@@ -78,8 +78,7 @@ public class FileStorage {
 			}
 		}//end of try
 		catch(IOException e) {
-			System.out.println("An error occured while trying to read the file.");
-			e.printStackTrace();
+			System.out.println("An error occured while trying to locate the file. \nCheck folder.");
 		}//end of catch
 	}//end of readFile
 	
