@@ -18,18 +18,18 @@ public class Driver {
 				selection = sc.nextLine();
 				
 				switch(selection) {
-					case "1": System.out.println(cd.option); break;
+					case "1": cd.callDirecotry(); break;
 					case "2": System.out.println(cf.doc); break;
 					case "3": System.out.println("Good bye!"); listener = false; break;
 					default: System.out.println("Invalid entry."); listener = false;				
 				}
 				
 				if(listener) {
-					System.out.print("Would you like to perform another operation? \n[1]Yes  [2]No ");
-					selection = sc.nextLine();
+					System.out.print("Would you like to perform another operation? \n[Y]Yes  [N]No ");
+					selection = sc.nextLine().toUpperCase();
 					switch(selection) {
-						case "1": listener = true; break;
-						case "2": System.out.println("Good bye!"); listener = false; break;
+						case "Y": listener = true; break;
+						case "N": System.out.println("Good bye!"); listener = false; break;
 						default: System.out.println("Invalid entry."); listener = false;
 					}
 				}
