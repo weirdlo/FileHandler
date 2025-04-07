@@ -10,30 +10,21 @@ public class Driver {
 			
 			String selection;
 			boolean listener = true; 
+			int counter = 0;
 						
 			Scanner sc = new Scanner(System.in);
 	
 			do {
 				System.out.println("What do you want to work with? \n[1]Directories  [2]Documents [3]Exit ");
-				selection = sc.nextLine();
+				selection = sc.next();
 				
 				switch(selection) {
 					case "1": cd.callDirecotry(); break;
 					case "2": System.out.println(cf.doc); break;
 					case "3": System.out.println("Good bye!"); listener = false; break;
-					default: System.out.println("Invalid entry."); listener = false;				
+					default: System.out.println("Invalid entry."); counter++;				
 				}
-				
-				if(listener) {
-					System.out.print("Would you like to perform another operation? \n[Y]Yes  [N]No ");
-					selection = sc.nextLine().toUpperCase();
-					switch(selection) {
-						case "Y": listener = true; break;
-						case "N": System.out.println("Good bye!"); listener = false; break;
-						default: System.out.println("Invalid entry."); listener = false;
-					}
-				}
-			}while(listener); 
+			}while(listener && counter != 3); 
 			
 			sc.close();
 		}//end of try
