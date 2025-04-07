@@ -1,6 +1,7 @@
 package fileHandler;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Directories {
 	public void currentDirectory() {
@@ -23,21 +24,30 @@ public class Directories {
 		}
 	}//end of createDirectory
 	
-	public void deleteDirectory(String folderName) {
-		String folder = folderName;
-		File directory = new File(folder);
-		
-		if(directory.isDirectory()) {
-			if(directory.delete()) {
-				System.out.println(directory.getName()+" has been removed.");
+	public void deleteDirectory(String folderName){
+		try {
+			String folder = folderName;
+			File directory = new File(folder);
+			
+			String dirName = directory.getCanonicalPath();
+			String checking = dirName.substring(dirName.lastIndexOf(File.separator) + 1);
+			
+			if(directory.isDirectory() && checking.equals(directory.getName())) {
+				if(directory.delete()) {
+					System.out.println(directory.getName()+" has been removed.");
+				}
+				else {
+					System.out.println("Failed to delete the folder.  Make sure it's empty.");
+				}
 			}
 			else {
-				System.out.println("Failed to delete the folder.  Make sure it's empty.");
+				System.out.println("Folder does not exist.");
 			}
-		}
-		else {
-			System.out.println("Folder does not exist.");
-		}
+		}//end of try
+		catch(IOException e) {
+			System.out.println("An error occured while trying to remove the folder.");
+			e.printStackTrace();
+		}//end of catch
 	}//end of deleteDirectory
 	
 	public void listDirectories() {
@@ -54,11 +64,4 @@ public class Directories {
 			System.out.println();
 		}
 	}//end of listDirectories
-	
-	/*
-	public void changeDirectory() {
-			
-	}//end of changeDirectory
-	*/
-	
 }//end of class
