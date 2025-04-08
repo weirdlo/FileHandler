@@ -10,17 +10,23 @@ public class Directories {
 	}//end of currentDirectory
 	
 	public void createDirectory(String newFolder) {
-		String folder = newFolder;
-		File directory = new File(folder);
-		
-		if(directory.isDirectory()) {
-			System.out.println("This directory already exists. \n"+directory.getAbsolutePath());
-		}
-		else if(directory.mkdir()) {
-			System.out.println("New directory "+directory.getName()+" has been created.");
-		}
-		else {
-			System.out.println("Couldn't create directory.");
+		try {
+			String folder = newFolder;
+			File directory = new File(folder);
+			
+			String dirName = directory.getCanonicalPath();
+			String checking = dirName.substring(dirName.lastIndexOf(File.separator) + 1);
+			
+			if(directory.isDirectory()) {
+				System.out.println("A directory named '"+checking+"' already exists.");
+			}
+			else if(directory.mkdir()) {
+				System.out.println("New directory "+directory.getName()+" has been created.");
+			}
+		}//end of try
+		catch(IOException e) {
+			System.out.println("An error occured while trying to create the folder.");
+			e.printStackTrace();
 		}
 	}//end of createDirectory
 	
