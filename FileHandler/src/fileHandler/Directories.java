@@ -38,9 +38,9 @@ public class Directories {
 			String dirName = directory.getCanonicalPath();
 			String checking = dirName.substring(dirName.lastIndexOf(File.separator) + 1);
 			
-			if(directory.isDirectory() && checking.equals(directory.getName())) {
+			if(directory.isDirectory()) {
 				if(directory.delete()) {
-					System.out.println(directory.getName()+" has been removed.");
+					System.out.println(checking+" has been removed.");
 				}
 				else {
 					System.out.println("Failed to delete the folder.  Make sure it's empty.");
