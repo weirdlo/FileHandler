@@ -57,11 +57,11 @@ public class FileStorage {
 		
 		if(file.exists() && checkName.equals(file.getName())) {
 			try	(BufferedWriter scribe = new BufferedWriter(new FileWriter(filename, true))) {
+				@SuppressWarnings("resource")
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Edit file here: ");
 				text = sc.nextLine();
 				scribe.write("\n"+time+"\n"+text+"\n");
-				sc.close();
 				System.out.println("\nThe file "+file.getName()+" has been updated.");
 			}//end try
 			catch(IOException e) {
