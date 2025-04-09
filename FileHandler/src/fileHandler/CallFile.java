@@ -30,7 +30,9 @@ public class CallFile {
 			docs.readFile(input);
 		}
 		else if(selection.equals("4")) {
-			System.out.println("Delete file method...");	
+			System.out.print("Enter new file name: ");
+			input = sc.nextLine();
+			docs.deleteFile(input);
 		}
 		else if(selection.equals("5")) {
 			docs.listFiles();
