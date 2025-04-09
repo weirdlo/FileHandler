@@ -5,17 +5,34 @@ import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
+enum filetype {
+	txt,
+	docx,
+	pdf
+}
 public class FileStorage {
 	public void createFile(String name) {
 		try {
-			String filename = name+".txt";
+			String filename;
+			
+			@SuppressWarnings("resource")
+			Scanner ext = new Scanner(System.in);
+			System.out.println("File type: [t].txt  [d].docx  [p].pdf");
+			String extension = ext.next();
+			
+			switch(extension.toLowerCase()) {
+				case "d": filename = name+"."+filetype.docx; break;
+				case "t": filename = name+"."+filetype.txt;; break;
+				case "p": filename = name+"."+filetype.pdf; break;
+				default: filename = name+"."+filetype.txt;  System.out.println("Invalid entry so we've decided for you.");
+			}
 			File file = new File(filename);
 			
 			if(file.createNewFile()) {
 				System.out.println("File "+file.getName()+" has been created.");
 			}
 			else {
-				System.out.println("The file already exists.");
+				System.out.println("The file "+file.getName()+" already exists.");
 			}
 		}//end of try
 		catch(IOException e) {
