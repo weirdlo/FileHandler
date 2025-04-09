@@ -25,7 +25,9 @@ public class CallFile {
 			docs.editFile(input);
 		}
 		else if(selection.equals("3")) {
-			System.out.println("Read file method...");	
+			System.out.print("Enter new file name: ");
+			input = sc.nextLine();
+			docs.readFile(input);
 		}
 		else if(selection.equals("4")) {
 			System.out.println("Delete file method...");	
