@@ -8,14 +8,21 @@ public class Directories {
 	static DirMemory dm = new DirMemory();
 	private String defaultDir = System.getProperty("user.dir");
 	
-	public void currentDirectory() {
-		if(dm.getDirectory() == null) {
+	public void currentDirectory() throws IOException {
+		String pwd = dm.getDirectory();
+		if(pwd == null) {
 			dm.setDirectory(defaultDir);
-			System.out.println(dm.getDirectory());
+			pwd = dm.getDirectory();
 		}
 		else {
-			System.out.println(dm.getDirectory());
+			File path = new File(pwd);
+			//String checkPath = path.getCanonicalPath();
+			if(!path.exists()) 
+				System.out.println("That folder isn't in this destination");
 		}
+		
+		System.out.println(pwd);
+		
 	}//end of currentDirectory
 	
 	public void createDirectory(String newFolder) {
@@ -108,27 +115,22 @@ public class Directories {
 			rmDir = pwd.substring(pwd.lastIndexOf(File.separator));
 			newPath = pwd.replace(rmDir,"");
 			dm.setDirectory(newPath);
-			System.out.println(dm.getDirectory());
+			pwd = dm.getDirectory();
 		}
 		else {
-			File dir = new File(pwd);
-			File[] folders = dir.listFiles();
-			boolean folderCheck = false;
-			
-			if(folders != null) {
-				for(File folder : folders) {
-					if(folder.isDirectory() && folder.getName().equals(navigator)) {
-						newPath = pwd+"\\"+navigator;
-						dm.setDirectory(newPath);
-						System.out.println(newPath);
-						folderCheck = true;
-						break;
-					}
-				}
+			System.out.println("Moving file up to "+navigator);
+			newPath = pwd+"\\"+navigator;
+			File folder = new File(newPath);
+			System.out.println(folder);
+			if(folder.exists()) {
+				System.out.println("Found folder!");
+				dm.setDirectory(newPath);
+				pwd = dm.getDirectory();
 			}
-			
-			if(folderCheck == false)
-				System.out.println("That folder doesn't exist in this destination.");
+			else
+				System.out.println("This folder doesn't live in this destination.");			
 		}
+		
+		System.out.println(pwd);
 	}//end changeDirectory
 }//end of class
