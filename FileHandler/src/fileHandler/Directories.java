@@ -2,11 +2,20 @@ package fileHandler;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class Directories {
+	static DirMemory dm = new DirMemory();
+	private String defaultDir = System.getProperty("user.dir");
+	
 	public void currentDirectory() {
-		String currentDir = System.getProperty("user.dir");
-		System.out.println(currentDir);
+		if(dm.getDirectory() == null) {
+			dm.setDirectory(defaultDir);
+			System.out.println(dm.getDirectory());
+		}
+		else {
+			System.out.println(dm.getDirectory());
+		}
 	}//end of currentDirectory
 	
 	public void createDirectory(String newFolder) {
@@ -57,10 +66,15 @@ public class Directories {
 	}//end of deleteDirectory
 	
 	public void listDirectories() {
-		String currentDir = System.getProperty("user.dir");
-		File dir = new File(currentDir);
-		File[] folders = dir.listFiles();
+		String pwd = dm.getDirectory();
+		if(pwd == null) {
+			dm.setDirectory(defaultDir);
+			pwd = dm.getDirectory();
+		}
 		
+		File dir = new File(pwd);
+		File[] folders = dir.listFiles();
+				
 		if(folders != null) {
 			for(File folder : folders) {
 				if(folder.isDirectory()) {
@@ -70,4 +84,43 @@ public class Directories {
 			System.out.println();
 		}
 	}//end of listDirectories
+	
+	
+	public void changeDirectory(String destination) {
+		String navigator = destination;
+		String rmDir, newPath;
+		
+		String pwd = dm.getDirectory();
+		if(pwd == null) {
+			dm.setDirectory(defaultDir);
+			pwd = dm.getDirectory();
+		}
+		
+		if(navigator.equals("cd ..")) {
+			rmDir = pwd.substring(pwd.lastIndexOf(File.separator));
+			newPath = pwd.replace(rmDir,"");
+			dm.setDirectory(newPath);
+			System.out.println(dm.getDirectory());
+		}
+		else {
+			File dir = new File(pwd);
+			File[] folders = dir.listFiles();
+			boolean folderCheck = false;
+			
+			if(folders != null) {
+				for(File folder : folders) {
+					if(folder.isDirectory() && folder.getName().equals(navigator)) {
+						newPath = pwd+"\\"+navigator;
+						dm.setDirectory(newPath);
+						System.out.println(newPath);
+						folderCheck = true;
+						break;
+					}
+				}
+			}
+			
+			if(folderCheck == false)
+				System.out.println("That folder doesn't exist in this destination.");
+		}
+	}//end changeDirectory
 }//end of class
