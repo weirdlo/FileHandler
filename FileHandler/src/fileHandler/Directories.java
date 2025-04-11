@@ -74,15 +74,23 @@ public class Directories {
 		
 		File dir = new File(pwd);
 		File[] folders = dir.listFiles();
-				
+		int folderCount = 0, totalFolders = 0;
 		if(folders != null) {
 			for(File folder : folders) {
 				if(folder.isDirectory()) {
-					System.out.print(folder.getName()+"/   ");
+					totalFolders++;
+					char charCheck = folder.getName().charAt(0);
+					if(charCheck == '.')
+						continue;
+					else {
+						System.out.print(folder.getName()+"/   ");
+						folderCount++;
+					}
 				}
 			}
 			System.out.println();
 		}
+		System.out.println("Folders: "+folderCount+"/"+totalFolders);
 	}//end of listDirectories
 	
 	
