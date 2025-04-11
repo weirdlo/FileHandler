@@ -118,12 +118,9 @@ public class Directories {
 			pwd = dm.getDirectory();
 		}
 		else {
-			System.out.println("Moving file up to "+navigator);
 			newPath = pwd+"\\"+navigator;
 			File folder = new File(newPath);
-			System.out.println(folder);
 			if(folder.exists()) {
-				System.out.println("Found folder!");
 				dm.setDirectory(newPath);
 				pwd = dm.getDirectory();
 			}
