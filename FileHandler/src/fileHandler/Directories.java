@@ -46,29 +46,26 @@ public class Directories {
 	}//end of createDirectory
 	
 	public void deleteDirectory(String folderName){
-		try {
-			String folder = folderName;
-			File directory = new File(folder);
-			
-			String dirName = directory.getCanonicalPath();
-			String checking = dirName.substring(dirName.lastIndexOf(File.separator) + 1);
-			
-			if(directory.isDirectory()) {
-				if(directory.delete()) {
-					System.out.println(checking+" has been removed.");
-				}
-				else {
-					System.out.println("Failed to delete the folder.  Make sure it's empty.");
-				}
+		String pwd = dm.getDirectory();
+		if(pwd == null) {
+			dm.setDirectory(defaultDir);
+			pwd = dm.getDirectory();
+		}
+		
+		String folder = folderName;
+		File directory = new File(pwd+"\\"+folder);
+		
+		if(directory.isDirectory()) {
+			if(directory.delete()) {
+				System.out.println(directory+" has been removed.");
 			}
 			else {
-				System.out.println("Folder does not exist.");
+				System.out.println("Failed to delete the folder.  Make sure it's empty.");
 			}
-		}//end of try
-		catch(IOException e) {
-			System.out.println("An error occured while trying to remove the folder.");
-			e.printStackTrace();
-		}//end of catch
+		}
+		else {
+			System.out.println("Folder does not exist.");
+		}
 	}//end of deleteDirectory
 	
 	public void listDirectories() {
