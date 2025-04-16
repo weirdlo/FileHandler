@@ -11,6 +11,10 @@ enum filetype {
 	pdf
 }
 public class FileStorage {
+	//static DirMemory dm = new DirMemory();
+	Directories dir = new Directories();
+	//private String defaultDir = System.getProperty("user.dir");
+	
 	public void createFile(String name) {
 		try {
 			String filename;
@@ -126,11 +130,20 @@ public class FileStorage {
 	}//end of deleteFile
 	
 	public void listFiles() {
-		String currentDir = System.getProperty("user.dir");
-		File dir = new File(currentDir);
+		String pwd = dir.pwd;
+		System.out.println("Check pwd [1]: "+pwd);
+		
+		if(pwd == null) {
+			pwd = dir.defaultDir;
+		}
+		
+		System.out.println("Check pwd [2]: "+pwd);
+		
+		
+		File dir = new File(pwd);
 		File[] files = dir.listFiles();
 		
-		System.out.println(currentDir);
+		System.out.println(pwd);
 		if(files != null) {
 			for(File file : files) {
 				if(file.isFile()) {
