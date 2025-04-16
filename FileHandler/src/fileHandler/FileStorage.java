@@ -7,15 +7,10 @@ import java.time.format.DateTimeFormatter;
 
 public class FileStorage {
 	Directories directory = new Directories();
-	String pwd;
+	String pwd = directory.pwd;
 	
 	public void createFile(String name) throws IOException {
 		String filename = name;
-		pwd = directory.pwd;
-		if(pwd == null) {
-			pwd = directory.defaultDir;
-		}
-		
 		File newfile = new File(pwd+"\\"+filename);
 		
 		if(newfile.createNewFile())
@@ -109,11 +104,6 @@ public class FileStorage {
 	}//end of deleteFile
 	
 	public void listFiles() {
-		pwd = directory.pwd;
-		if(pwd == null) {
-			pwd = directory.defaultDir;
-		}
-		
 		File dir = new File(pwd);
 		File[] files = dir.listFiles();
 		
