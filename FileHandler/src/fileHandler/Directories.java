@@ -5,23 +5,19 @@ import java.io.IOException;
 
 public class Directories {
 	static DirMemory dm = new DirMemory();
-	private String defaultDir = System.getProperty("user.dir");
+	protected String defaultDir = System.getProperty("user.dir");
+	protected String pwd;
 	
-	public void currentDirectory() throws IOException {
-		String pwd = dm.getDirectory();
+	public Directories() {
+		pwd = dm.getDirectory();
 		if(pwd == null) {
 			dm.setDirectory(defaultDir);
 			pwd = dm.getDirectory();
 		}
-		else {
-			File path = new File(pwd);
-			//String checkPath = path.getCanonicalPath();
-			if(!path.exists()) 
-				System.out.println("That folder isn't in this destination");
-		}
-		
+	}
+	
+	public void currentDirectory() throws IOException {
 		System.out.println(pwd);
-		
 	}//end of currentDirectory
 	
 	public void createDirectory(String newFolder) throws IOException {

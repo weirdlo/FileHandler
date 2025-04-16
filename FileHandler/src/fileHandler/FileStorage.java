@@ -5,44 +5,23 @@ import java.util.*;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-enum filetype {
-	txt,
-	docx,
-	pdf
-}
 public class FileStorage {
-	//static DirMemory dm = new DirMemory();
-	Directories dir = new Directories();
-	//private String defaultDir = System.getProperty("user.dir");
+	Directories directory = new Directories();
+	String pwd;
 	
-	public void createFile(String name) {
-		try {
-			String filename;
-			
-			@SuppressWarnings("resource")
-			Scanner ext = new Scanner(System.in);
-			System.out.println("File type: [t].txt  [d].docx  [p].pdf");
-			String extension = ext.next();
-			
-			switch(extension.toLowerCase()) {
-				case "d": filename = name+"."+filetype.docx; break;
-				case "t": filename = name+"."+filetype.txt;; break;
-				case "p": filename = name+"."+filetype.pdf; break;
-				default: filename = name+"."+filetype.txt;  System.out.println("Invalid entry so we've decided for you.");
-			}
-			File file = new File(filename);
-			
-			if(file.createNewFile()) {
-				System.out.println("File "+file.getName()+" has been created.");
-			}
-			else {
-				System.out.println("The file "+file.getName()+" already exists.");
-			}
-		}//end of try
-		catch(IOException e) {
-			System.out.println("An error occured when trying to create the file.");
-			e.printStackTrace();
-		}//end of catch
+	public void createFile(String name) throws IOException {
+		String filename = name;
+		pwd = directory.pwd;
+		if(pwd == null) {
+			pwd = directory.defaultDir;
+		}
+		
+		File newfile = new File(pwd+"\\"+filename);
+		
+		if(newfile.createNewFile())
+			System.out.println("File "+newfile.getName()+" has been created.");
+		else
+			System.out.println("The file "+newfile.getName()+" already exists.");
 	}//end of createFile
 	
 	public void editFile(String name) throws IOException {		
@@ -130,15 +109,10 @@ public class FileStorage {
 	}//end of deleteFile
 	
 	public void listFiles() {
-		String pwd = dir.pwd;
-		System.out.println("Check pwd [1]: "+pwd);
-		
+		pwd = directory.pwd;
 		if(pwd == null) {
-			pwd = dir.defaultDir;
+			pwd = directory.defaultDir;
 		}
-		
-		System.out.println("Check pwd [2]: "+pwd);
-		
 		
 		File dir = new File(pwd);
 		File[] files = dir.listFiles();
