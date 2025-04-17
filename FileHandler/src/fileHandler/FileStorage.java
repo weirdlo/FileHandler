@@ -21,7 +21,7 @@ public class FileStorage {
 	
 	public void editFile(String name) throws IOException {		
 		String filename = name;
-		File file = new File(filename);
+		File viewfile = new File(pwd+"\\"+filename);
 		String text;
 		
 		//Adding time tracker
@@ -30,17 +30,17 @@ public class FileStorage {
 		String time = clock.format(clockFormat);
 		
 		//To make the filename checks case sensitive.
-		String canonicalPath = file.getCanonicalPath();
+		String canonicalPath = viewfile.getCanonicalPath();
 		String checkName =  canonicalPath.substring(canonicalPath.lastIndexOf(File.separator) + 1);
 		
-		if(file.exists() && checkName.equals(file.getName())) {
-			try	(BufferedWriter scribe = new BufferedWriter(new FileWriter(filename, true))) {
+		if(viewfile.exists() && checkName.equals(viewfile.getName())) {
+			try	(BufferedWriter scribe = new BufferedWriter(new FileWriter(viewfile, true))) {
 				@SuppressWarnings("resource")
 				Scanner sc = new Scanner(System.in);
 				System.out.println("Edit file here: ");
 				text = sc.nextLine();
 				scribe.write("\n"+time+"\n"+text+"\n");
-				System.out.println("\nThe file "+file.getName()+" has been updated.");
+				System.out.println("\nThe file "+viewfile.getName()+" has been updated.");
 			}//end try
 			catch(IOException e) {
 				System.out.println("File editing error occured.");
@@ -48,13 +48,13 @@ public class FileStorage {
 		}
 		else {
 			System.out.println("The file does not exist.");
-		}		
+		}
 	}//end of editFile
 	
 	public void readFile(String name){
 		try {
 			String filename = name;
-			File file = new File(filename);
+			File file = new File(pwd+"\\"+filename);
 			
 			String readPath = file.getCanonicalPath();
 			String checkFile =  readPath.substring(readPath.lastIndexOf(File.separator) + 1);
@@ -80,7 +80,7 @@ public class FileStorage {
 	public void deleteFile(String name) {
 		try {
 			String filename = name;
-			File file = new File(filename);
+			File file = new File(pwd+"\\"+filename);
 			
 			String filepath = file.getCanonicalPath();
 			String checking = filepath.substring(filepath.lastIndexOf(File.separator) + 1);
