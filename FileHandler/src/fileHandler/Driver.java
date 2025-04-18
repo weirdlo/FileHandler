@@ -21,7 +21,7 @@ public class Driver {
 				}
 				else if((relay.contains("cd "))||(relay.contains("mkdir "))||(relay.contains("rmdir "))||(relay.contains("rm "))||(relay.contains("vim "))||(relay.contains("vi "))||(relay.contains("cat "))) {
 					//Separate string into two, one having the command only.
-					String[] keywords = {"cd ","mkdir "};
+					String[] keywords = {"cd ","mkdir ","rmdir "};
 					String str1 = "", str2 = "";
 					
 					for(String word : keywords) {
@@ -37,6 +37,7 @@ public class Driver {
 				else if(relay.equals("exit")) {
 					listener = false;
 				}
+				else if(relay.equals("")) {}
 				else {
 					System.out.println("Invalid command.");
 					count++;			
