@@ -15,13 +15,13 @@ public class Driver {
 				System.out.print(">> ");
 				String relay = input.nextLine().toLowerCase();
 				
-				if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")) {
+				if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")||relay.equals("ls -l")) {
 					Commander cmd = new Commander(relay);
 					count = 0;
 				}
 				else if((relay.contains("cd "))||(relay.contains("mkdir "))||(relay.contains("rmdir "))||(relay.contains("rm "))||(relay.contains("vim "))||(relay.contains("vi "))||(relay.contains("cat "))) {
 					//Separate string into two, one having the command only.
-					String[] keywords = {"cd ","mkdir ","rmdir "};
+					String[] keywords = {"cd ","mkdir ","rmdir ","cat ","rm ","vim ","vi ",};
 					String str1 = "", str2 = "";
 					
 					for(String word : keywords) {

@@ -16,7 +16,7 @@ public class FileStorage {
 		if(newfile.createNewFile())
 			System.out.println("File "+newfile.getName()+" has been created.");
 		else
-			System.out.println("The file "+newfile.getName()+" already exists.");
+			editFile(filename);
 	}//end of createFile
 	
 	public void editFile(String name) throws IOException {		
@@ -29,11 +29,7 @@ public class FileStorage {
 		DateTimeFormatter clockFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String time = clock.format(clockFormat);
 		
-		//To make the filename checks case sensitive.
-		String canonicalPath = viewfile.getCanonicalPath();
-		String checkName =  canonicalPath.substring(canonicalPath.lastIndexOf(File.separator) + 1);
-		
-		if(viewfile.exists() && checkName.equals(viewfile.getName())) {
+		if(viewfile.exists()) {
 			try	(BufferedWriter scribe = new BufferedWriter(new FileWriter(viewfile, true))) {
 				@SuppressWarnings("resource")
 				Scanner sc = new Scanner(System.in);
@@ -49,19 +45,15 @@ public class FileStorage {
 		else {
 			System.out.println("The file does not exist.");
 		}
-	}//end of editFile
+	}//editFile()
 	
 	public void readFile(String name){
 		try {
 			String filename = name;
 			File file = new File(pwd+"\\"+filename);
-			
-			String readPath = file.getCanonicalPath();
-			String checkFile =  readPath.substring(readPath.lastIndexOf(File.separator) + 1);
-			
 			Scanner reader = new Scanner(file);
 			
-			if(file.exists() && checkFile.equals(file.getName())) {
+			if(file.exists()) {
 				while(reader.hasNextLine()){
 					String lines = reader.nextLine();
 					System.out.println(lines);
@@ -71,52 +63,55 @@ public class FileStorage {
 			else {
 				System.out.println("The file you've entered does not exist.");
 			}
-		}//end of try
+		}//try
 		catch(IOException e) {
 			System.out.println("An error occured while trying to locate the file. \nCheck folder.");
-		}//end of catch
-	}//end of readFile
+		}//catch
+	}//readFile()
 	
-	public void deleteFile(String name) {
-		try {
-			String filename = name;
-			File file = new File(pwd+"\\"+filename);
-			
-			String filepath = file.getCanonicalPath();
-			String checking = filepath.substring(filepath.lastIndexOf(File.separator) + 1);
-			
-			if(file.exists() && checking.equals(file.getName())) {
-				if(file.delete()) {
-					System.out.println(file.getName()+" was successfully deleted.");
-				}
-				else {
-					System.out.println("Cannot delete file "+file.getName());
-				}
+	public void deleteFile(String name) throws IOException {
+		String filename = name;
+		File file = new File(pwd+"\\"+filename);
+		
+		if(file.exists()) {
+			if(file.delete()) {
+				System.out.println(file.getName()+" was successfully deleted.");
 			}
 			else {
-				System.out.println("File: "+file.getName()+" does not exist.");
+				System.out.println("Cannot delete file "+file.getName());
 			}
-		}//end of try
-		catch(IOException e) {
-			System.out.println("An error occured while trying to delete the file.");
-			e.printStackTrace();
-		}//end of catch
-	}//end of deleteFile
+		}
+		else {
+			System.out.println("File: "+file.getName()+" does not exist.");
+		}
+	}//deleteFile()
 	
-	public void listFiles() {
+	public void listInfo() {
 		File dir = new File(pwd);
 		File[] files = dir.listFiles();
+		int count = 0;
 		
 		System.out.println(pwd);
 		if(files != null) {
 			for(File file : files) {
-				if(file.isFile()) {
+				char charCheck = file.getName().charAt(0);
+				if(charCheck == '.')
+					continue;
+				else if(file.isFile() ) {
 					String isRead = (file.canRead()) ? "r" : "-r";
 					String isWrite = (file.canWrite()) ? "w" : "-w";
 					String isExecutable = (file.canExecute()) ? "x" : "-x";
-					System.out.println(">> "+file.getName()+"  "+file.length()+"B  "+isRead+isWrite+isExecutable);
+					System.out.println(isRead+isWrite+isExecutable+"   "+file.length()+"B   "+file.getName());
 				}
+				else if(file.isDirectory()) {
+					String isRead = (file.canRead()) ? "r" : "-r";
+					String isWrite = (file.canWrite()) ? "w" : "-w";
+					String isExecutable = (file.canExecute()) ? "x" : "-x";
+					System.out.println(isRead+isWrite+isExecutable+"   "+file.length()+"B   "+file.getName()+"\\  ");
+				}
+				count++;
 			}
 		}
+		System.out.println("Total: "+count+"\n");
 	}//end of listFiles
 }//end of class

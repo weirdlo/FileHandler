@@ -64,32 +64,28 @@ public class Directories {
 		}
 	}//end of deleteDirectory
 	
-	public void listDirectories() {
-		String pwd = dm.getDirectory();
-		if(pwd == null) {
-			dm.setDirectory(defaultDir);
-			pwd = dm.getDirectory();
-		}
-		
+	public void listContents() {
+		System.out.println(pwd);
 		File dir = new File(pwd);
 		File[] folders = dir.listFiles();
-		int folderCount = 0, totalFolders = 0;
+		int folderCount = 0, fileCount = 0;
 		if(folders != null) {
-			for(File folder : folders) {
-				if(folder.isDirectory()) {
-					totalFolders++;
-					char charCheck = folder.getName().charAt(0);
-					if(charCheck == '.')
-						continue;
-					else {
-						System.out.print(folder.getName()+"/   ");
+			for(File content : folders) {
+				char charCheck = content.getName().charAt(0);
+				if(charCheck == '.')
+					continue;
+				else if(content.isDirectory()) {
+						System.out.print(content.getName()+"/   ");
 						folderCount++;
-					}
+				}
+				else if(content.isFile()) {
+					System.out.print(content.getName()+"  ");
+					fileCount++;
 				}
 			}
 			System.out.println();
 		}
-		System.out.println("Folders: "+folderCount+"/"+totalFolders);
+		System.out.println("Folders: "+folderCount+"\nFiles: "+fileCount+"\n");
 	}//end of listDirectories
 	
 	public void changeDirectory(String destination) {
