@@ -40,7 +40,7 @@ public class CallDirectory {
 					dir.changeDirectory(newDir);
 					break;
 				}
-				else if(newDir.contains("cd")) {
+				else if(newDir.contains("cd ")) {
 					String trimLetters = "cd ";
 					newDir = input.replaceAll(trimLetters, "");
 					dir.changeDirectory(newDir);
