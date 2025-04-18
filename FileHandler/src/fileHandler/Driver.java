@@ -3,36 +3,91 @@ package fileHandler;
 import java.util.Scanner;
 
 public class Driver {
+	
 	public static void main(String[] args) {
 		try {
-			CallDirectory cd = new CallDirectory();
-			CallFile cf = new CallFile();
-			
-			String selection;
-			boolean listener = true; 
-			int counter = 0;
+			System.out.println("Welcome.  Enter a command to get started.");
+			Scanner input = new Scanner(System.in);
+			boolean listener = true;
+			int count = 0;
 						
-			Scanner sc = new Scanner(System.in);
-	
 			do {
-				System.out.println("What do you want to work with? \n[1]Directories  [2]Documents [3]Exit ");
-				selection = sc.next();
+				System.out.print(">> ");
+				String relay = input.nextLine().toLowerCase();
 				
-				switch(selection) {
-					case "1": cd.callDirecotry(); break;
-					case "2": System.out.println(cf.doc); break;
-					case "3": System.out.println("Good bye!"); listener = false; break;
-					default: System.out.println("Invalid entry."); counter++;				
+				if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")) {
+					Commander cmd = new Commander(relay);
+					count = 0;
 				}
-			}while(listener && counter != 3); 
+				else if((relay.contains("cd "))||(relay.contains("mkdir "))||(relay.contains("rmdir "))||(relay.contains("rm "))||(relay.contains("vim "))||(relay.contains("vi "))||(relay.contains("cat "))) {
+					//Separate string into two, one having the command only.
+					String[] keywords = {"cd ","mkdir "};
+					String str1 = "", str2 = "";
+					
+					for(String word : keywords) {
+						if(relay.contains(word)) {
+							str1 = word;
+							str2 = relay.replaceAll(str1, "");
+							break;
+						}
+					}
+					Commander cmd = new Commander(str1,str2);
+					count = 0;
+				}
+				else if(relay.equals("exit")) {
+					listener = false;
+				}
+				else {
+					System.out.println("Invalid command.");
+					count++;			
+				}
+			}
+			while(listener && count != 3);
 			
-			sc.close();
-		}//end of try
+			input.close();
+		}//try
 		catch(Exception e) {
 			e.printStackTrace();
-		}//end of catch
+		}//catch
 		finally {
 			System.out.println("Closing program...");
-		}//end of finally
-	}//end of main
-}//end of class
+		}//finally
+	}//main	
+}//class
+
+
+
+
+
+/*
+
+CallDirectory cd = new CallDirectory();
+CallFile cf = new CallFile();
+CommandLine cmd = new CommandLine();
+
+String selection;
+boolean listener = true; 
+int counter = 0;
+			
+Scanner sc = new Scanner(System.in);
+
+////Test Values
+String testOne = "First choice";
+String testTwo = "Second choice";
+
+do {
+	System.out.println();
+	//selection = sc.nextLine();
+	selection = cmd.getCommand();
+	
+	switch(selection) {
+		case "1": System.out.println(testOne); break;
+		case "2": System.out.println(testTwo); break;
+		case "exit": listener = false; break;
+		default: System.out.println("Invalid entry."); counter++;				
+	}
+}while(listener && counter != 3); 
+
+sc.close();
+
+*/
