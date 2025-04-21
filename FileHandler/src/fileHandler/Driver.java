@@ -20,7 +20,6 @@ public class Driver {
 					count = 0;
 				}
 				else if((relay.contains("cd "))||(relay.contains("mkdir "))||(relay.contains("rmdir "))||(relay.contains("rm "))||(relay.contains("vim "))||(relay.contains("vi "))||(relay.contains("cat "))) {
-					//Separate string into two, one having the command only.
 					String[] keywords = {"cd ","mkdir ","rmdir ","cat ","rm ","vim ","vi ",};
 					String str1 = "", str2 = "";
 					
@@ -55,40 +54,3 @@ public class Driver {
 		}//finally
 	}//main	
 }//class
-
-
-
-
-
-/*
-
-CallDirectory cd = new CallDirectory();
-CallFile cf = new CallFile();
-CommandLine cmd = new CommandLine();
-
-String selection;
-boolean listener = true; 
-int counter = 0;
-			
-Scanner sc = new Scanner(System.in);
-
-////Test Values
-String testOne = "First choice";
-String testTwo = "Second choice";
-
-do {
-	System.out.println();
-	//selection = sc.nextLine();
-	selection = cmd.getCommand();
-	
-	switch(selection) {
-		case "1": System.out.println(testOne); break;
-		case "2": System.out.println(testTwo); break;
-		case "exit": listener = false; break;
-		default: System.out.println("Invalid entry."); counter++;				
-	}
-}while(listener && counter != 3); 
-
-sc.close();
-
-*/
