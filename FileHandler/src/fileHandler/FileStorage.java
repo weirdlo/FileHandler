@@ -17,14 +17,13 @@ public class FileStorage {
 			System.out.println("File "+newfile.getName()+" has been created.");
 		else
 			editFile(filename);
-	}//end of createFile
+	}//createFile
 	
 	public void editFile(String name) throws IOException {		
 		String filename = name;
 		File viewfile = new File(pwd+"\\"+filename);
 		String text;
 		
-		//Adding time tracker
 		LocalDateTime clock = LocalDateTime.now();
 		DateTimeFormatter clockFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 		String time = clock.format(clockFormat);
@@ -37,10 +36,10 @@ public class FileStorage {
 				text = sc.nextLine();
 				scribe.write("\n"+time+"\n"+text+"\n");
 				System.out.println("\nThe file "+viewfile.getName()+" has been updated.");
-			}//end try
+			}//try
 			catch(IOException e) {
 				System.out.println("File editing error occured.");
-			}//end catch				
+			}//catch				
 		}
 		else {
 			System.out.println("The file does not exist.");
@@ -60,9 +59,8 @@ public class FileStorage {
 				}
 				reader.close();
 			}
-			else {
+			else 
 				System.out.println("The file you've entered does not exist.");
-			}
 		}//try
 		catch(IOException e) {
 			System.out.println("An error occured while trying to locate the file. \nCheck folder.");
@@ -74,16 +72,13 @@ public class FileStorage {
 		File file = new File(pwd+"\\"+filename);
 		
 		if(file.exists()) {
-			if(file.delete()) {
+			if(file.delete()) 
 				System.out.println(file.getName()+" was successfully deleted.");
-			}
-			else {
+			else 
 				System.out.println("Cannot delete file "+file.getName());
-			}
 		}
-		else {
+		else 
 			System.out.println("File: "+file.getName()+" does not exist.");
-		}
 	}//deleteFile()
 	
 	public void listInfo() {
@@ -94,24 +89,19 @@ public class FileStorage {
 		System.out.println(pwd);
 		if(files != null) {
 			for(File file : files) {
+				String isRead = (file.canRead()) ? "r" : "-r";
+				String isWrite = (file.canWrite()) ? "w" : "-w";
+				String isExecutable = (file.canExecute()) ? "x" : "-x";
 				char charCheck = file.getName().charAt(0);
 				if(charCheck == '.')
 					continue;
-				else if(file.isFile() ) {
-					String isRead = (file.canRead()) ? "r" : "-r";
-					String isWrite = (file.canWrite()) ? "w" : "-w";
-					String isExecutable = (file.canExecute()) ? "x" : "-x";
+				else if(file.isFile() ) 
 					System.out.println(isRead+isWrite+isExecutable+"   "+file.length()+"B   "+file.getName());
-				}
-				else if(file.isDirectory()) {
-					String isRead = (file.canRead()) ? "r" : "-r";
-					String isWrite = (file.canWrite()) ? "w" : "-w";
-					String isExecutable = (file.canExecute()) ? "x" : "-x";
+				else if(file.isDirectory()) 
 					System.out.println(isRead+isWrite+isExecutable+"   "+file.length()+"B   "+file.getName()+"\\  ");
-				}
 				count++;
 			}
 		}
 		System.out.println("Total: "+count+"\n");
-	}//end of listFiles
-}//end of class
+	}//listFiles()
+}//FileStorage
