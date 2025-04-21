@@ -9,7 +9,20 @@ public class Commander{
 	protected String command;
 	protected String title;
 	
-	public Commander(String command) throws IOException {
+	Commander(){
+		System.out.println("ls - List all files and directories under current location.");
+		System.out.println("ls l - List all files and directoried under current location with file and folder descriptions and permissions.");
+		System.out.println("cd - list current directory.");
+		System.out.println("mkdir <directory_name> - Creates new directory.");
+		System.out.println("rmdir <directory_name> - Deletes directory if empty.");
+		System.out.println("vim <filename> - To create new file or edit existing one.");
+		System.out.println("vi <filename> - To create new file or edit existing one.");
+		System.out.println("cat <filename> - To read file.");
+		System.out.println("rm <filename> - To delete file.");
+		System.out.println("exit - To close command line.");
+	}//Commander()
+	
+	Commander(String command) throws IOException {
 		this.command = command;
 		
 		switch(command) {
@@ -20,7 +33,7 @@ public class Commander{
 		}
 	}//Commander(String)
 	
-	public Commander(String command, String title) throws IOException {
+	Commander(String command, String title) throws IOException {
 		this.command = command;
 		this.title = title;
 		
