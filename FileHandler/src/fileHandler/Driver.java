@@ -13,13 +13,15 @@ public class Driver {
 						
 			do {
 				System.out.print(">> ");
-				String relay = input.nextLine().toLowerCase();
+				String relay = input.nextLine();
 				
-				if(relay.equals("help")) {
+				if(relay.equals("help")||relay.equals("?")) {
+					relay.toLowerCase();
 					Commander cmd = new Commander();
 					count = 0;
 				}
-				if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")||relay.equals("ls -l")) {
+				else if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")||relay.equals("ls -l")) {
+					relay.toLowerCase();
 					Commander cmd = new Commander(relay);
 					count = 0;
 				}

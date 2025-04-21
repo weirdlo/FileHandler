@@ -12,7 +12,9 @@ public class Commander{
 	Commander(){
 		System.out.println("ls - List all files and directories under current location.");
 		System.out.println("ls l - List all files and directoried under current location with file and folder descriptions and permissions.");
-		System.out.println("cd - list current directory.");
+		System.out.println("pwd - List current directory.");
+		System.out.println("cd .. - Goes back one directory.");
+		System.out.println("cd <directory_name> - Goes up to the directory if it's in the current destination.");
 		System.out.println("mkdir <directory_name> - Creates new directory.");
 		System.out.println("rmdir <directory_name> - Deletes directory if empty.");
 		System.out.println("vim <filename> - To create new file or edit existing one.");
