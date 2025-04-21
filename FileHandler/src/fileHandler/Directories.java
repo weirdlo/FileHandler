@@ -18,57 +18,40 @@ public class Directories {
 	
 	public void currentDirectory() throws IOException {
 		System.out.println(pwd);
-	}//end of currentDirectory
+	}//currentDirectory
 	
 	public void createDirectory(String newFolder) throws IOException {
-		String pwd = dm.getDirectory();
-		if(pwd == null) {
-			dm.setDirectory(defaultDir);
-			pwd = dm.getDirectory();
-		}
-		
 		String folder = newFolder;
 		File directory = new File(pwd+"\\"+folder);
 		
-		if(directory.isDirectory()) {
+		if(directory.isDirectory()) 
 			System.out.println(directory.getName()+" already exists under this destination.");
-		}
-		else if(directory.mkdir()) {
+		else if(directory.mkdir()) 
 			System.out.println("New directory "+directory.getName()+" has been created.");
-		}
-		else {
+		else 
 			System.out.println("Error: Couldn't create directory.");
-		}
-	}//end of createDirectory
+	}//createDirectory
 	
 	public void deleteDirectory(String folderName){
-		String pwd = dm.getDirectory();
-		if(pwd == null) {
-			dm.setDirectory(defaultDir);
-			pwd = dm.getDirectory();
-		}
-		
 		String folder = folderName;
 		File directory = new File(pwd+"\\"+folder);
 		
 		if(directory.isDirectory()) {
-			if(directory.delete()) {
+			if(directory.delete()) 
 				System.out.println(directory+" has been removed.");
-			}
-			else {
+			else 
 				System.out.println("Failed to delete the folder.  Make sure it's empty.");
-			}
 		}
-		else {
+		else 
 			System.out.println("Folder does not exist.");
-		}
-	}//end of deleteDirectory
+	}//deleteDirectory
 	
 	public void listContents() {
 		System.out.println(pwd);
 		File dir = new File(pwd);
 		File[] folders = dir.listFiles();
 		int folderCount = 0, fileCount = 0;
+		
 		if(folders != null) {
 			for(File content : folders) {
 				char charCheck = content.getName().charAt(0);
@@ -86,17 +69,11 @@ public class Directories {
 			System.out.println();
 		}
 		System.out.println("Folders: "+folderCount+"\nFiles: "+fileCount+"\n");
-	}//end of listDirectories
+	}//listDirectories
 	
 	public void changeDirectory(String destination) {
 		String navigator = destination;
 		String rmDir, newPath;
-		
-		String pwd = dm.getDirectory();
-		if(pwd == null) {
-			dm.setDirectory(defaultDir);
-			pwd = dm.getDirectory();
-		}
 		
 		if(navigator.equals("cd ..")) {
 			rmDir = pwd.substring(pwd.lastIndexOf(File.separator));
@@ -114,7 +91,6 @@ public class Directories {
 			else
 				System.out.println("This folder doesn't live in this destination.");			
 		}
-		
 		System.out.println(pwd);
-	}//end changeDirectory
-}//end of class
+	}//changeDirectory
+}//Directories
