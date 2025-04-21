@@ -16,12 +16,10 @@ public class Driver {
 				String relay = input.nextLine();
 				
 				if(relay.equals("help")||relay.equals("?")) {
-					relay.toLowerCase();
 					Commander cmd = new Commander();
 					count = 0;
 				}
 				else if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")||relay.equals("ls -l")) {
-					relay.toLowerCase();
 					Commander cmd = new Commander(relay);
 					count = 0;
 				}
