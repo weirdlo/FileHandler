@@ -16,11 +16,11 @@ public class Driver {
 				String relay = input.nextLine();
 				
 				if(relay.equals("help")||relay.equals("?")) {
-					Commander cmd = new Commander();
+					new Commander();
 					count = 0;
 				}
 				else if(relay.equals("pwd")||relay.equals("ls")||relay.equals("cd ..")||relay.equals("ls -l")) {
-					Commander cmd = new Commander(relay);
+					new Commander(relay);
 					count = 0;
 				}
 				else if((relay.contains("cd "))||(relay.contains("mkdir "))||(relay.contains("rmdir "))||(relay.contains("rm "))||(relay.contains("vim "))||(relay.contains("vi "))||(relay.contains("cat "))) {
@@ -34,7 +34,7 @@ public class Driver {
 							break;
 						}
 					}
-					Commander cmd = new Commander(str1,str2);
+					new Commander(str1,str2);
 					count = 0;
 				}
 				else if(relay.equals("exit")) {
